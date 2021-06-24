@@ -174,10 +174,57 @@ SR 알고리즘들의 목표는 보통 **복구된 HR 이미지와 Ground Truth 
 
 ![image](https://user-images.githubusercontent.com/66320010/123244236-ae017b80-d51e-11eb-8f3e-72aa804b7da5.png)
 
+- 실험의 데이터로는 super resolution에서 널리 이용되는 Set5, Set14, 그리고 BSD100을 이용했다.
 
+- 모든 실험은 저해상도(LR) 및 고해상도 이미지(SR) 사이에서 4 배의 배율로 수행된다. 이는 pixel 사이즈가 16배 감소했다는 것을 의미한다.
 
+- ImageNet 데이터베이스에서 가져온 35 만 개의 이미지로 구성된 무작위 샘플을 사용하여 NVIDIA Tesla M40 GPU에서 모든 네트워크를 훈련 시켰다.
 
+- SRResNet의 경우에는 1,000,000번의 epoch을, SRGAN의 경우에는 100,00번의 epoch을 train하였다.
 
+- 또한 convincing image들을 재구성하는 다양한 접근의 ability를 정량화하기 위해서 MOS test를 실행했다. 
 
+- 26명의 사람에게 이미지를 1(나쁨) 부터 5(좋음)로 이미지를 평가하도록 하였고, 각 이미지의 12개의 버전을 평가했다. 이 test 결과는 좋은 신뢰도를 보였으며, 위 그림의 표에서 사람들의 SRGAN의 결과를 다른 모델에 비해 좋게 평가했음을 확인할 수 있다.
 
+### Investigation of content loss ###
 
+![image](https://user-images.githubusercontent.com/66320010/123270452-e2833080-d53a-11eb-8693-2087b0f0c39b.png)
+
+- 이 논문에서는 GAN-based netwrok의 perceptual loss에 대해서 여러 다른 content loss의 효과에 대해서 조사했다.
+
+- SRResNet과 SRGAN에 대해 𝑙^𝑆𝑅 = 𝑙_𝑋^𝑆𝑅 + 10^(−3) * 𝑙_𝐺𝑒𝑛^𝑆𝑅 에서 어떤 𝑙_𝑋^𝑆𝑅 을 선택하느냐에 따라서 바뀌는 결과값들에 대한 표이다.
+
+- SRGAN-MSE : 𝑙_𝑀𝑆𝐸^𝑆𝑅 , 표준 MSE와 함께 있는 adversarial loss를 분석하기 위함
+
+  SRGAN-VGG22 : 𝑙_(𝑉𝐺𝐺/2.2)^𝑆𝑅 with ∅_2.2, lower-level feature를 대표하는 feature map에 define된 loss
+  
+  SRGAN-VGG54 : 𝑙_(𝑉𝐺𝐺/5.4)^𝑆𝑅 with ∅_5.4, higher-level feature를 대표하는 feature  map에 define된 loss이며 뒤따라 설명되는 SRGAN이다.
+  
+ - 위의 표를 보면 MSE를 이용한 모델들이 대체적으로 더 좋은 PSNR값을 얻었다. 이 표에서 Set5에 대해서는 어떤 방식이 더 좋다라고 결정 지을 수 없지만, Set14에서는 SRGAN-VGG54가 MOS를 기준으로 다른 모델들을 이김을 볼 수있다.
+
+![image](https://user-images.githubusercontent.com/66320010/123272698-f6c82d00-d53c-11eb-8508-74c6bb51753c.png)
+
+- 위 그림에서 각 모델들의 결과값들을 확인해볼 수 있다. 실제로 SRGAN-VGG54가 사람이 보기 좋게 좀 더 디테일한 부분들과 이미지의 질감을 살렸음을 알 수 있다.
+
+![image](https://user-images.githubusercontent.com/66320010/123273729-de0c4700-d53d-11eb-92f4-0b6ec0805d7a.png)
+
+- 위 그림은 데이터에 대한 여러 방법들의 비교를 나타낸 표이다.
+ 
+- SRResnet에서 PSNR과 SSIM값이 두드러지는 것을 확인할 수 있고 SRGAN에서 MOS값이 눈에 띄게 높은 것을 확인할 수 있다. 
+
+  ▶ 이를 통해 사람들이 이미지를 인식할때 PSNR이나 SSIM 값이 매우 높지 않아도 좋은 이미지라 인식할 수 있으며, 사람 기준의 high resolution이 다를 수 있다라는 것을 보여주었다.
+  
+## Discussion and future work ## 
+  
+- SRGAN이 MOS test에서 상당한 성능을 보임을 확인하였다.
+
+- 더 깊은 네트워크 구조가 더 좋은 성능을 보임을 확인하였다.
+
+- 네트워크가 깊은 경우에는 high-frequency artifact의 출현으로 train하기 상당히 힘들다는 것을 발견하였다.
+
+- loss fuction은 어떻게 사용하느냐에 달려있다.
+  
+
+📍 **[논문 링크]**
+
+https://arxiv.org/pdf/1609.04802.pdf
