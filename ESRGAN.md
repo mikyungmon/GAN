@@ -12,7 +12,7 @@
 
   SRGAN에 의해 복원된 이미지의 품질을 더욱 향상시키기 위해 Generator의 구조에서 2가지를 수정했다.
   
-  ![image](https://user-images.githubusercontent.com/66320010/139796135-8a813f9a-6485-485d-90a0-f8d58a336768.png)
+  ![image](https://user-images.githubusercontent.com/66320010/139797219-4e90bb6d-5c4d-4aa5-bce9-4e619489e513.png)
 
   1. 모든 Batch Normalization layer들을 제거
 
@@ -47,6 +47,8 @@
 Residual-in-Residual Dense Block (RRDB) 를 통해 Generator를 발전시켰다면 Discriminator는 Relativistic GAN을 기반으로 발전한다.
 
 SRGAN의 Discriminator와의 차이는 SRGAN의 판별자는 이미지가 real인지 fake인지에 대해 판별을 한다면 ESRGAN에서는 Real image Xr이 Fake imgage Xf보다 realistic할(현실적일) 확률을 예측한다.
+
+![image](https://user-images.githubusercontent.com/66320010/139797290-229dd169-70f0-4650-89e1-c5a7ff216771.png)
 
 ![image](https://user-images.githubusercontent.com/66320010/139663033-db15bf8d-5aab-4558-9ac5-16d7f4e74eec.png)
 
