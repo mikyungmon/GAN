@@ -11,6 +11,8 @@
 ### ◾ Network Architecture ###
 
   SRGAN에 의해 복원된 이미지의 품질을 더욱 향상시키기 위해 Generator의 구조에서 2가지를 수정했다.
+  
+  ![image](https://user-images.githubusercontent.com/66320010/139796135-8a813f9a-6485-485d-90a0-f8d58a336768.png)
 
   1. 모든 Batch Normalization layer들을 제거
 
